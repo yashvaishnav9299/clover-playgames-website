@@ -66,5 +66,15 @@
 
   </div>
 
+  <script>
+    const instagramButton = document.querySelector('.icon-btn');
+
+    instagramButton.addEventListener('click', () => {
+      instagramButton.classList.remove('is-pressed');
+      void instagramButton.offsetWidth;
+      instagramButton.classList.add('is-pressed');
+    });
+  </script>
+
 </body>
 </html>

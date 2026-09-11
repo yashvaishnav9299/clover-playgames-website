@@ -133,12 +133,30 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s ease;
+  transition: transform 0.18s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .icon-btn svg { width: 20px; height: 20px; }
 
 .icon-btn:hover { border-color: var(--green); }
+
+.icon-btn:active { transform: scale(0.9); }
+
+.icon-btn.is-pressed {
+  animation: instagram-press 0.32s cubic-bezier(0.2, 0.85, 0.35, 1);
+}
+
+@keyframes instagram-press {
+  0% { transform: scale(1); }
+  42% { transform: scale(0.84); background: rgba(46, 204, 113, 0.16); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn { transition: border-color 0.2s ease, background-color 0.2s ease; }
+  .icon-btn:active { transform: none; }
+  .icon-btn.is-pressed { animation: none; }
+}
 
 .pill-btn {
   display: inline-flex;
