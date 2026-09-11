@@ -73,14 +73,6 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
-/* Retina desktop displays at normal window sizes */
-@media (min-width: 641px) and (-webkit-min-device-pixel-ratio: 1.5),
-       (min-width: 641px) and (min-resolution: 144dpi) {
-  .hero-bg {
-    background-image: url("../images/hero-desktop-2400.jpg");
-  }
-}
-
 /* Mobile — base */
 @media (max-width: 640px) {
   .hero-bg {
@@ -191,14 +183,15 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 150px var(--pad-x-desktop) 40px;
-  max-width: 860px;
+  /* The hero spans the page; only the copy determines its visual width. */
+  padding: clamp(108px, 16vh, 150px) var(--pad-x-desktop) 40px;
 }
 
 .headline {
   margin: 0;
   font-weight: 800;
-  font-size: clamp(60px, 7.2vw, 112px);
+  /* 110px at the 1672px reference viewport, without runaway scaling. */
+  font-size: clamp(84px, 6.58vw, 112px);
   line-height: 0.92;
   letter-spacing: -2px;
 }
@@ -251,13 +244,14 @@ a { text-decoration: none; color: inherit; }
     padding: 24px var(--pad-x-mobile) 0;
   }
 
-  .logo-text { font-size: 18px; }
-  .logo-icon { width: 30px; height: 30px; }
+  .logo { gap: 8px; }
+  .logo-text { font-size: 14px; letter-spacing: -0.2px; }
+  .logo-icon { width: 24px; height: 24px; }
 
-  .header-actions { gap: 10px; }
-  .icon-btn { width: 38px; height: 38px; }
-  .icon-btn svg { width: 16px; height: 16px; }
-  .header-actions .pill-btn { padding: 11px 20px; font-size: 14px; }
+  .header-actions { gap: 8px; }
+  .icon-btn { width: 32px; height: 32px; }
+  .icon-btn svg { width: 14px; height: 14px; }
+  .header-actions .pill-btn { padding: 8px 12px; font-size: 12px; }
 
   .hero {
     padding: 46px var(--pad-x-mobile) 0;
@@ -287,7 +281,7 @@ a { text-decoration: none; color: inherit; }
     align-items: flex-end;
     padding: 0 var(--pad-x-mobile) 24px;
     font-size: 12px;
-    margin-top: 28px;
+    margin-top: auto;
   }
 
   .br-mobile { display: block; }
