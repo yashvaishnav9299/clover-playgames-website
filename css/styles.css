@@ -1,0 +1,294 @@
+/* ============================================
+   CLOVER PLAY GAMES — Coming Soon page
+   ============================================ */
+
+:root {
+  --bg: #07090a;
+  --green: #2ecc71;
+  --green-glow: #3ef07a;
+  --white: #ffffff;
+  --body-gray: #d6d6d6;
+  --footer-muted: rgba(255, 255, 255, 0.6);
+  --border-muted: rgba(255, 255, 255, 0.18);
+
+  --font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --pad-x-desktop: 64px;
+  --pad-x-mobile: 24px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------
+   BACKGROUND SCENE
+   Serves the right resolution per screen size /
+   pixel density. Full-bleed — fills the browser
+   window edge to edge at every width.
+--------------------------------------------- */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  /* Base (small/standard desktop screens) */
+  background-image: url("../images/hero-desktop-1672.jpg");
+}
+
+/* Large desktop monitors */
+@media (min-width: 1700px) {
+  .hero-bg {
+    background-image: url("../images/hero-desktop-2400.jpg");
+  }
+}
+
+/* Very large / 4K-ish desktop monitors */
+@media (min-width: 2300px) {
+  .hero-bg {
+    background-image: url("../images/hero-desktop-2560.jpg");
+  }
+}
+
+/* Retina desktop displays at normal window sizes */
+@media (min-width: 641px) and (-webkit-min-device-pixel-ratio: 1.5),
+       (min-width: 641px) and (min-resolution: 144dpi) {
+  .hero-bg {
+    background-image: url("../images/hero-desktop-2400.jpg");
+  }
+}
+
+/* Mobile — base */
+@media (max-width: 640px) {
+  .hero-bg {
+    background-image: url("../images/hero-mobile-941.jpg");
+    background-position: center top;
+  }
+}
+
+/* Mobile — retina phones */
+@media (max-width: 640px) and (-webkit-min-device-pixel-ratio: 1.5),
+       (max-width: 640px) and (min-resolution: 144dpi) {
+  .hero-bg {
+    background-image: url("../images/hero-mobile-1080.jpg");
+    background-position: center top;
+  }
+}
+
+/* ---------------------------------------------
+   HEADER
+--------------------------------------------- */
+.site-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 44px var(--pad-x-desktop) 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon { width: 40px; height: 40px; }
+
+.logo-text {
+  font-weight: 800;
+  font-size: 27px;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+
+.logo-text .accent { color: var(--green); }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease;
+}
+
+.icon-btn svg { width: 20px; height: 20px; }
+
+.icon-btn:hover { border-color: var(--green); }
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 17px 32px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pill-btn.outline {
+  border: 1.5px solid var(--green);
+  color: var(--white);
+  background: transparent;
+}
+
+.header-actions .pill-btn {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 14px 28px;
+}
+
+.pill-btn.outline:hover {
+  background: var(--green);
+  color: #06210f;
+}
+
+/* ---------------------------------------------
+   HERO CONTENT
+--------------------------------------------- */
+.hero {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 150px var(--pad-x-desktop) 40px;
+  max-width: 860px;
+}
+
+.headline {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(60px, 7.2vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -2px;
+}
+
+.headline span {
+  display: block;
+}
+
+.line-white { color: var(--white); }
+.line-accent { color: var(--green); }
+
+.subtext {
+  margin: 30px 0 0;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--body-gray);
+  max-width: 460px;
+}
+
+.coming-soon {
+  margin-top: 40px;
+  width: fit-content;
+}
+
+/* ---------------------------------------------
+   FOOTER
+--------------------------------------------- */
+.site-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 var(--pad-x-desktop) 36px;
+  font-size: 15px;
+  color: var(--footer-muted);
+}
+
+.site-footer p { margin: 0; line-height: 1.5; }
+.site-footer a:hover { color: var(--white); }
+
+.br-mobile { display: none; }
+
+/* ---------------------------------------------
+   MOBILE (≤ 640px) — matches portrait screenshot
+--------------------------------------------- */
+@media (max-width: 640px) {
+  .site-header {
+    padding: 24px var(--pad-x-mobile) 0;
+  }
+
+  .logo-text { font-size: 18px; }
+  .logo-icon { width: 30px; height: 30px; }
+
+  .header-actions { gap: 10px; }
+  .icon-btn { width: 38px; height: 38px; }
+  .icon-btn svg { width: 16px; height: 16px; }
+  .header-actions .pill-btn { padding: 11px 20px; font-size: 14px; }
+
+  .hero {
+    padding: 46px var(--pad-x-mobile) 0;
+    max-width: none;
+    flex: none;
+    justify-content: flex-start;
+  }
+
+  .headline {
+    font-size: clamp(44px, 13vw, 64px);
+    letter-spacing: -1px;
+    line-height: 0.95;
+  }
+
+  .subtext {
+    font-size: 17px;
+    margin-top: 18px;
+    max-width: 320px;
+  }
+
+  .br-desktop { display: none; }
+
+  .coming-soon { margin-top: 24px; padding: 16px 30px; font-size: 13px; }
+
+  .site-footer {
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 0 var(--pad-x-mobile) 24px;
+    font-size: 12px;
+    margin-top: 28px;
+  }
+
+  .br-mobile { display: block; }
+}
