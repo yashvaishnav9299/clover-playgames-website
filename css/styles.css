@@ -19,9 +19,11 @@
 
 * { box-sizing: border-box; }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
+  width: 100%;
   height: 100%;
   overflow-x: hidden;
   background: var(--bg);
@@ -30,10 +32,14 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { text-decoration: none; color: inherit; }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
 .page {
   position: relative;
+  width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
@@ -43,45 +49,35 @@ a { text-decoration: none; color: inherit; }
 
 /* ---------------------------------------------
    BACKGROUND SCENE
-   Serves the right resolution per screen size /
-   pixel density. Full-bleed — fills the browser
-   window edge to edge at every width.
+
+   The desktop assets are selected by viewport
+   width, not pixel density. This keeps the
+   1672px reference composition deterministic on
+   both normal and Retina displays.
 --------------------------------------------- */
 .hero-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
-  /* Base (small/standard desktop screens) */
   background-image: url("../images/hero-desktop-1672.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
-/* Large desktop monitors */
 @media (min-width: 1700px) {
   .hero-bg {
     background-image: url("../images/hero-desktop-2400.jpg");
   }
 }
 
-/* Very large / 4K-ish desktop monitors */
 @media (min-width: 2300px) {
   .hero-bg {
     background-image: url("../images/hero-desktop-2560.jpg");
   }
 }
 
-/* Retina desktop displays at normal window sizes */
-@media (min-width: 641px) and (-webkit-min-device-pixel-ratio: 1.5),
-       (min-width: 641px) and (min-resolution: 144dpi) {
-  .hero-bg {
-    background-image: url("../images/hero-desktop-2400.jpg");
-  }
-}
-
-/* Mobile — base */
+/* Mobile */
 @media (max-width: 640px) {
   .hero-bg {
     background-image: url("../images/hero-mobile-941.jpg");
@@ -89,7 +85,6 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
-/* Mobile — retina phones */
 @media (max-width: 640px) and (-webkit-min-device-pixel-ratio: 1.5),
        (max-width: 640px) and (min-resolution: 144dpi) {
   .hero-bg {
@@ -104,6 +99,8 @@ a { text-decoration: none; color: inherit; }
 .site-header {
   position: relative;
   z-index: 2;
+  flex: 0 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -114,23 +111,32 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 0 0 auto;
 }
 
-.logo-icon { width: 40px; height: 40px; }
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+}
 
 .logo-text {
   font-weight: 800;
   font-size: 27px;
+  line-height: 1;
   letter-spacing: -0.3px;
   white-space: nowrap;
 }
 
-.logo-text .accent { color: var(--green); }
+.logo-text .accent {
+  color: var(--green);
+}
 
 .header-actions {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex: 0 0 auto;
 }
 
 .icon-btn {
@@ -141,16 +147,23 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 48px;
   transition: border-color 0.2s ease;
 }
 
-.icon-btn svg { width: 20px; height: 20px; }
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
 
-.icon-btn:hover { border-color: var(--green); }
+.icon-btn:hover {
+  border-color: var(--green);
+}
 
 .pill-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 17px 32px;
   border-radius: 999px;
@@ -183,20 +196,30 @@ a { text-decoration: none; color: inherit; }
 
 /* ---------------------------------------------
    HERO CONTENT
+
+   The hero spans the viewport. Its content is
+   intentionally left aligned with the same 64px
+   page inset as the header/footer. This avoids
+   using a max-width container as the positioning
+   mechanism.
 --------------------------------------------- */
 .hero {
   position: relative;
   z-index: 2;
-  flex: 1;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-start;
   padding: 150px var(--pad-x-desktop) 40px;
-  max-width: 860px;
 }
 
 .headline {
   margin: 0;
+  width: max-content;
+  max-width: 100%;
   font-weight: 800;
   font-size: clamp(60px, 7.2vw, 112px);
   line-height: 0.92;
@@ -205,10 +228,16 @@ a { text-decoration: none; color: inherit; }
 
 .headline span {
   display: block;
+  width: max-content;
 }
 
-.line-white { color: var(--white); }
-.line-accent { color: var(--green); }
+.line-white {
+  color: var(--white);
+}
+
+.line-accent {
+  color: var(--green);
+}
 
 .subtext {
   margin: 30px 0 0;
@@ -222,6 +251,8 @@ a { text-decoration: none; color: inherit; }
 .coming-soon {
   margin-top: 40px;
   width: fit-content;
+  min-width: 196px;
+  min-height: 58px;
 }
 
 /* ---------------------------------------------
@@ -230,6 +261,8 @@ a { text-decoration: none; color: inherit; }
 .site-footer {
   position: relative;
   z-index: 2;
+  flex: 0 0 auto;
+  width: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -238,38 +271,76 @@ a { text-decoration: none; color: inherit; }
   color: var(--footer-muted);
 }
 
-.site-footer p { margin: 0; line-height: 1.5; }
-.site-footer a:hover { color: var(--white); }
+.site-footer p {
+  margin: 0;
+  line-height: 1.5;
+}
 
-.br-mobile { display: none; }
+.site-footer a:hover {
+  color: var(--white);
+}
+
+.br-mobile {
+  display: none;
+}
 
 /* ---------------------------------------------
-   MOBILE (≤ 640px) — matches portrait screenshot
+   MOBILE (≤ 640px)
 --------------------------------------------- */
 @media (max-width: 640px) {
   .site-header {
     padding: 24px var(--pad-x-mobile) 0;
   }
 
-  .logo-text { font-size: 18px; }
-  .logo-icon { width: 30px; height: 30px; }
+  .logo {
+    gap: 8px;
+  }
 
-  .header-actions { gap: 10px; }
-  .icon-btn { width: 38px; height: 38px; }
-  .icon-btn svg { width: 16px; height: 16px; }
-  .header-actions .pill-btn { padding: 11px 20px; font-size: 14px; }
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .header-actions {
+    gap: 10px;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .header-actions .pill-btn {
+    padding: 11px 20px;
+    font-size: 14px;
+  }
 
   .hero {
+    flex: 1 1 auto;
     padding: 46px var(--pad-x-mobile) 0;
-    max-width: none;
-    flex: none;
-    justify-content: flex-start;
   }
 
   .headline {
+    width: max-content;
+    max-width: 100%;
     font-size: clamp(44px, 13vw, 64px);
     letter-spacing: -1px;
     line-height: 0.95;
+  }
+
+  .headline span {
+    max-width: 100%;
   }
 
   .subtext {
@@ -278,9 +349,17 @@ a { text-decoration: none; color: inherit; }
     max-width: 320px;
   }
 
-  .br-desktop { display: none; }
+  .br-desktop {
+    display: none;
+  }
 
-  .coming-soon { margin-top: 24px; padding: 16px 30px; font-size: 13px; }
+  .coming-soon {
+    margin-top: 24px;
+    min-width: 0;
+    min-height: 0;
+    padding: 16px 30px;
+    font-size: 13px;
+  }
 
   .site-footer {
     flex-direction: row;
@@ -290,5 +369,7 @@ a { text-decoration: none; color: inherit; }
     margin-top: 28px;
   }
 
-  .br-mobile { display: block; }
+  .br-mobile {
+    display: block;
+  }
 }
