@@ -466,12 +466,57 @@ def check_hostinger_status() -> int:
     return 0
 
 
+def check_mail_status() -> int:
+    env = {**load_env(ROOT_DIR / ".env"), **os.environ}
+    mail_token = env.get("HOSTINGER_MAIL_API_TOKEN", "").strip()
+
+    if not mail_token or mail_token == "your_hostinger_mail_api_token_here":
+        print("[ERROR] HOSTINGER_MAIL_API_TOKEN is not set in .env")
+        return 1
+
+    headers = {
+        "Authorization": f"Bearer {mail_token}",
+        "Accept": "application/json",
+    }
+
+    print("=== Querying Hostinger Agentic Mail API (/api/v1/me) ===")
+    me_info = api_request(
+        "https://api.mail.hostinger.com/api/v1/me",
+        "GET",
+        headers,
+        None,
+        dry_run=False,
+    )
+    print(json.dumps(me_info, indent=2))
+
+    mailboxes = (me_info.get("data") or {}).get("mailboxes") or []
+    for mb in mailboxes:
+        res_id = mb.get("resourceId")
+        addr = mb.get("address")
+        if res_id:
+            print(f"\n=== Folders for {addr} ({res_id}) ===")
+            try:
+                folders = api_request(
+                    f"https://api.mail.hostinger.com/api/v1/mailboxes/{res_id}/folders",
+                    "GET",
+                    headers,
+                    None,
+                    dry_run=False,
+                )
+                print(json.dumps(folders, indent=2))
+            except Exception as exc:
+                print(f"[WARN] Could not list folders: {exc}")
+
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Clover Play Games Verification & Deployment CLI")
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("verify", help="Run HTML/CSS/Asset/HTTP verification suite")
-    sub.add_parser("status", help="Inspect Hostinger domains and DNS zone records")
+    sub.add_parser("status", help="Inspect Hostinger domains, DNS zone records, and GitHub Pages")
+    sub.add_parser("mail", help="Verify Hostinger Agentic Mail API access for admin@cloverplaygames.com")
     deploy_parser = sub.add_parser("deploy", help="Configure CNAME, Hostinger DNS, and GitHub Pages")
     deploy_parser.add_argument("--dry-run", action="store_true", help="Print planned actions without network writes")
 
@@ -480,6 +525,8 @@ def main() -> int:
         return verify_site()
     if args.command == "status":
         return check_hostinger_status()
+    if args.command == "mail":
+        return check_mail_status()
     if args.command == "deploy":
         return deploy_site(dry_run=args.dry_run)
     return 1

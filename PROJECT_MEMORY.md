@@ -75,6 +75,9 @@ clover-playgames-website/
   - Enabled GitHub Pages (`main` branch, `/` root) via GitHub REST API (`PUT /repos/yashvaishnav9299/clover-playgames-website/pages`).
   - Provisioned Let's Encrypt TLS certificate (`state: approved`, expires `2027-02-05`) covering both `cloverplaygames.com` and `www.cloverplaygames.com`.
   - Enabled `https_enforced: true` and verified `status: built` at `https://cloverplaygames.com/`.
+- [x] **Phase 4C — Hostinger Agentic Mail API Integration**:
+  - Connected `scripts/manage_site.py mail` to `https://api.mail.hostinger.com/api/v1` using `HOSTINGER_MAIL_API_TOKEN` in `.env`.
+  - Verified active mailbox resource `ACdd7d5abbaa2024c8efdf34986ab4` (`info@cloverplaygames.com`, order `OR47a2a52ea5c0be690b521356cbca`) and folder access (`INBOX`, `Drafts`, `Junk`, `Sent`, `Trash`).
 
 ### Immediate Pending Tasks
 - None — all current sprint milestones are complete and live in production at `https://cloverplaygames.com/`.
