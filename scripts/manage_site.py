@@ -198,7 +198,7 @@ def verify_site() -> int:
     return 0
 
 
-def api_request(url: str, method: str, headers: dict[str, str], payload: dict | None, dry_run: bool) -> dict:
+def api_request(url: str, method: str, headers: dict[str, str], payload: dict | None, dry_run: bool) -> dict | list:
     body = json.dumps(payload).encode("utf-8") if payload is not None else None
     if dry_run:
         print(f"[DRY-RUN] {method} {url}")
@@ -206,7 +206,8 @@ def api_request(url: str, method: str, headers: dict[str, str], payload: dict | 
             print(f"          Payload: {json.dumps(payload, indent=2)}")
         return {"status": "dry_run"}
 
-    req = urllib.request.Request(url, data=body, headers=headers, method=method)
+    req_headers = {"User-Agent": "CloverPlayGames-DeployCLI/1.0", **headers}
+    req = urllib.request.Request(url, data=body, headers=req_headers, method=method)
     try:
         with urllib.request.urlopen(req, timeout=20) as resp:
             raw = resp.read().decode("utf-8")
@@ -240,10 +241,38 @@ def deploy_site(dry_run: bool) -> int:
         cname_path.write_text(f"{domain}\n", encoding="utf-8")
         print(f"[OK] Wrote CNAME file for {domain}")
 
-    # Step 2: Configure Hostinger DNS Zone for GitHub Pages
+    # Step 2: Configure Hostinger DNS Zone for GitHub Pages (preserving MX/TXT/DKIM email records)
+    hostinger_url = f"https://developers.hostinger.com/api/dns/v1/zones/{domain}"
+    hostinger_headers = {
+        "Authorization": f"Bearer {hostinger_token or 'REDACTED'}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+
+    if not dry_run and not hostinger_token:
+        print("[ERROR] HOSTINGER_API_TOKEN is missing in .env; cannot configure Hostinger DNS.")
+        return 1
+
+    preserved_records: list[dict] = []
+    if not dry_run:
+        existing_zone = api_request(hostinger_url, "GET", hostinger_headers, None, dry_run=False)
+        if isinstance(existing_zone, list):
+            for entry in existing_zone:
+                r_name = entry.get("name")
+                r_type = entry.get("type")
+                # Replace root A/AAAA and www CNAME; keep all MX, TXT, DKIM, autodiscover, etc.
+                if (r_name == "@" and r_type in ("A", "AAAA")) or (r_name == "www" and r_type == "CNAME"):
+                    continue
+                preserved_records.append({
+                    "name": r_name,
+                    "type": r_type,
+                    "ttl": entry.get("ttl", 3600),
+                    "records": [{"content": r["content"]} for r in entry.get("records", [])],
+                })
+
     dns_payload = {
-        "overwrite": False,
-        "zone": [
+        "overwrite": True,
+        "zone": preserved_records + [
             {
                 "name": "@",
                 "type": "A",
@@ -265,20 +294,9 @@ def deploy_site(dry_run: bool) -> int:
         ],
     }
 
-    hostinger_url = f"https://developers.hostinger.com/api/dns/v1/zones/{domain}"
-    hostinger_headers = {
-        "Authorization": f"Bearer {hostinger_token or 'REDACTED'}",
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-    }
-
-    if not dry_run and not hostinger_token:
-        print("[ERROR] HOSTINGER_API_TOKEN is missing in .env; cannot configure Hostinger DNS.")
-        return 1
-
     api_request(hostinger_url, "PUT", hostinger_headers, dns_payload, dry_run=dry_run)
     if not dry_run:
-        print(f"[OK] Configured Hostinger DNS records (A, AAAA, CNAME) for {domain}")
+        print(f"[OK] Configured Hostinger DNS records (A, AAAA, CNAME) for {domain} (preserved {len(preserved_records)} existing records)")
 
     # Step 3: Configure GitHub Pages & Custom Domain
     gh_pages_url = f"https://api.github.com/repos/{github_repo}/pages"
@@ -304,17 +322,62 @@ def deploy_site(dry_run: bool) -> int:
     return 0
 
 
+def check_hostinger_status() -> int:
+    env = {**load_env(ROOT_DIR / ".env"), **os.environ}
+    hostinger_token = env.get("HOSTINGER_API_TOKEN", "").strip()
+    if not hostinger_token:
+        print("[ERROR] HOSTINGER_API_TOKEN is not set in .env")
+        return 1
+
+    headers = {
+        "Authorization": f"Bearer {hostinger_token}",
+        "Accept": "application/json",
+    }
+
+    print("=== Querying Hostinger Domain Portfolio ===")
+    portfolio = api_request(
+        "https://developers.hostinger.com/api/domains/v1/portfolio",
+        "GET",
+        headers,
+        None,
+        dry_run=False,
+    )
+    print(json.dumps(portfolio, indent=2))
+
+    domain = env.get("DOMAIN_NAME", "").strip()
+    if isinstance(portfolio, list) and len(portfolio) > 0:
+        discovered = portfolio[0].get("domain")
+        if discovered:
+            domain = discovered
+
+    if domain:
+        print(f"\n=== Querying Hostinger DNS Zone for {domain} ===")
+        zone = api_request(
+            f"https://developers.hostinger.com/api/dns/v1/zones/{domain}",
+            "GET",
+            headers,
+            None,
+            dry_run=False,
+        )
+        print(json.dumps(zone, indent=2))
+
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Clover Play Games Verification & Deployment CLI")
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("verify", help="Run HTML/CSS/Asset/HTTP verification suite")
+    sub.add_parser("status", help="Inspect Hostinger domains and DNS zone records")
     deploy_parser = sub.add_parser("deploy", help="Configure CNAME, Hostinger DNS, and GitHub Pages")
     deploy_parser.add_argument("--dry-run", action="store_true", help="Print planned actions without network writes")
 
     args = parser.parse_args()
     if args.command == "verify":
         return verify_site()
+    if args.command == "status":
+        return check_hostinger_status()
     if args.command == "deploy":
         return deploy_site(dry_run=args.dry_run)
     return 1

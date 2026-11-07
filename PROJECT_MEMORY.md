@@ -61,18 +61,20 @@ clover-playgames-website/
   - Configured `.coming-soon` hero element as a static `<span>` status badge (no dead `#` jump).
   - Configured header Instagram link to `https://www.instagram.com/cloverplaygames/` with `target="_blank" rel="noopener noreferrer"`.
 - [x] **Phase 2 — Git History Reconciliation**:
-  - Merged `origin/main` (`41fa7a1` — structural flex/width stability fixes) with local `main` (`c9292f3`, `fc183cb` + working tree updates: 5-petal clover SVG, `SOMETHING FUN IS LOADING.` copy, and `.loading-progress` bar).
+  - Merged `origin/main` (`41fa7a1` — structural flex/width stability fixes) with local `main` (`c9292f3`, `fc183cb` + working tree updates: 5-petal clover SVG, `SOMETHING FUN IS LOADING.` copy, and `.loading-progress` bar) and pushed to `origin/main`.
 - [x] **Phase 3 — Production Readiness, SEO & Verification Suite**:
   - Created `images/favicon.svg` from the 5-petal gradient clover mark and linked in `<head>`.
-  - Added Open Graph (`og:title`, `og:description`, `og:image`, `og:type`, `og:site_name`) and Twitter Card (`summary_large_image`) meta tags in `index.html`.
+  - Added canonical URL (`https://cloverplaygames.com/`), Open Graph (`og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `og:site_name`), and Twitter Card (`summary_large_image`) meta tags in `index.html`.
   - Cleaned up `css/styles.css`: replaced dead `border-color` hover on borderless `.icon-btn` with `color: var(--green)`, removed unused `@keyframes instagram-press`, removed `!important` overrides on `.coming-soon`, and increased mobile Instagram SVG icon from `14px` to `22px` for visual balance.
-  - Built `scripts/manage_site.py` (`verify` and `deploy` subcommands) and verified all checks pass (`python scripts/manage_site.py verify`).
+  - Built `scripts/manage_site.py` (`verify`, `status`, and `deploy` subcommands) and verified all checks pass (`python scripts/manage_site.py verify`).
+- [x] **Phase 4A — Hostinger DNS Provisioning & `CNAME` Setup**:
+  - Connected to Hostinger API (`developers.hostinger.com`) for `cloverplaygames.com` (`id: 34360046`, active until `2027-09-10`).
+  - Replaced legacy Netlify DNS records (`75.2.60.5` and `magic-sort-webdemo.netlify.app.`) with GitHub Pages `A` records (`185.199.108.153`..`111.153`), `AAAA` IPv6 records (`2606:50c0:8000::153`..`8003::153`), and `www` `CNAME` (`yashvaishnav9299.github.io`), while preserving all 8 Hostinger email records (`MX`, `SPF`, `DMARC`, `DKIM`, `autoconfig`, `autodiscover`).
+  - Added `CNAME` (`cloverplaygames.com`) to repository root.
 
-### Immediate Pending Tasks (Next Phase)
-- [ ] **Phase 4 — Live Hostinger DNS & GitHub Pages Provisioning**:
-  - Populate `.env` with `DOMAIN_NAME`, `HOSTINGER_API_TOKEN`, and `GITHUB_TOKEN`.
-  - Push reconciled `main` branch to `origin/main`.
-  - Run `python scripts/manage_site.py deploy` to write `CNAME`, configure Hostinger `A`/`AAAA`/`CNAME` records, enable GitHub Pages custom domain + HTTPS enforcement, and verify live resolution.
+### Immediate Pending Tasks (Final Step)
+- [ ] **Phase 4B — GitHub Pages Activation & HTTPS Enforcement**:
+  - Enable GitHub Pages on `yashvaishnav9299/clover-playgames-website` (`main` branch, `/` root) either via `GITHUB_TOKEN` in `.env` or via GitHub repo **Settings → Pages**.
 
 ---
 
