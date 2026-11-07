@@ -78,6 +78,7 @@ clover-playgames-website/
 - [x] **Phase 4C — Hostinger Agentic Mail API Integration**:
   - Connected `scripts/manage_site.py mail` to `https://api.mail.hostinger.com/api/v1` using `HOSTINGER_MAIL_API_TOKEN` in `.env`.
   - Verified active mailbox resource `ACdd7d5abbaa2024c8efdf34986ab4` (`info@cloverplaygames.com`, order `OR47a2a52ea5c0be690b521356cbca`) and folder access (`INBOX`, `Drafts`, `Junk`, `Sent`, `Trash`).
+  - Updated website header CTA and footer contact links in `index.html` from `hello@cloverplaygames.com` to `info@cloverplaygames.com`.
 
 ### Immediate Pending Tasks
 - None — all current sprint milestones are complete and live in production at `https://cloverplaygames.com/`.

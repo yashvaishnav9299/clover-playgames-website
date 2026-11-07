@@ -44,25 +44,49 @@
     <!-- Header -->
     <header class="site-header">
       <a href="./" class="logo" aria-label="Clover Play Games home">
-        <svg class="logo-icon" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="logo-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="clover-green" x1="9" y1="5" x2="31" y2="35" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#44F58A"/>
-              <stop offset="1" stop-color="#12B957"/>
+            <linearGradient id="clover-leaf-main" x1="6" y1="4" x2="34" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#5BFF9C"/>
+              <stop offset="50%" stop-color="#2ECC71"/>
+              <stop offset="100%" stop-color="#0E9F49"/>
+            </linearGradient>
+            <linearGradient id="clover-leaf-alt" x1="34" y1="4" x2="6" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#44F58A"/>
+              <stop offset="55%" stop-color="#24B862"/>
+              <stop offset="100%" stop-color="#0A7E38"/>
+            </linearGradient>
+            <linearGradient id="clover-play-grad" x1="16" y1="15" x2="25" y2="25" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#FFFFFF"/>
+              <stop offset="100%" stop-color="#B8FFD3"/>
             </linearGradient>
           </defs>
-          <g fill="url(#clover-green)">
-            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z"/>
-            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(72 20 20)"/>
-            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(144 20 20)"/>
-            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(216 20 20)"/>
-            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(288 20 20)"/>
+          <path d="M20 22C20 27.8 20.6 32.5 23.2 36.8" stroke="url(#clover-leaf-main)" stroke-width="2.6" stroke-linecap="round"/>
+          <g>
+            <g transform="rotate(45 20 20)">
+              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-main)"/>
+              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round"/>
+            </g>
+            <g transform="rotate(135 20 20)">
+              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-alt)"/>
+              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.35" stroke-width="1.1" stroke-linecap="round"/>
+            </g>
+            <g transform="rotate(225 20 20)">
+              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-main)"/>
+              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.35" stroke-width="1.1" stroke-linecap="round"/>
+            </g>
+            <g transform="rotate(315 20 20)">
+              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-alt)"/>
+              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round"/>
+            </g>
           </g>
+          <circle cx="20" cy="20" r="6.4" fill="#06170D" stroke="#44F58A" stroke-width="1.4"/>
+          <path d="M18.3 16.9C18.3 16.4 18.85 16.1 19.28 16.36L23.15 18.66C23.56 18.9 23.56 19.5 23.15 19.74L19.28 22.04C18.85 22.3 18.3 22 18.3 21.5V16.9Z" transform="translate(0 0.8)" fill="url(#clover-play-grad)"/>
         </svg>
         <span class="logo-text">CLOVER <span class="accent">PLAY</span> GAMES</span>
       </a>
 
-      <nav class="header-actions">
+      <nav class="header-actions" aria-label="Primary navigation">
         <a href="https://www.instagram.com/cloverplaygames/" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="Instagram">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
             <rect x="3" y="3" width="26" height="26" rx="7" stroke="currentColor" stroke-width="2.4"/>
@@ -70,7 +94,7 @@
             <circle cx="23.6" cy="8.5" r="1.6" fill="currentColor"/>
           </svg>
         </a>
-        <a href="mailto:hello@cloverplaygames.com" class="pill-btn outline">
+        <a href="contact.html" class="pill-btn outline">
           Get in touch
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -96,19 +120,26 @@
     <!-- Footer -->
     <footer class="site-footer">
       <p>© 2026 Clover Play Games.<br class="br-mobile" /> All rights reserved.</p>
-      <p><a href="mailto:hello@cloverplaygames.com">hello@cloverplaygames.com</a></p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <span class="footer-sep" aria-hidden="true">•</span>
+        <a href="contact.html">Get in Touch</a>
+        <span class="footer-sep" aria-hidden="true">•</span>
+        <a href="mailto:info@cloverplaygames.com" class="footer-email">info@cloverplaygames.com</a>
+      </nav>
     </footer>
 
   </div>
 
   <script>
     const instagramButton = document.querySelector('.icon-btn');
-    instagramButton.addEventListener('click', () => {
-      instagramButton.classList.remove('is-pressed');
-      void instagramButton.offsetWidth;
-      instagramButton.classList.add('is-pressed');
-    });
-
+    if (instagramButton) {
+      instagramButton.addEventListener('click', () => {
+        instagramButton.classList.remove('is-pressed');
+        void instagramButton.offsetWidth;
+        instagramButton.classList.add('is-pressed');
+      });
+    }
   </script>
 
 </body>
