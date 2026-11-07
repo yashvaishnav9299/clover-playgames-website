@@ -22,6 +22,7 @@
 html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
   height: 100%;
   overflow-x: hidden;
   background: var(--bg);
@@ -34,6 +35,7 @@ a { text-decoration: none; color: inherit; }
 
 .page {
   position: relative;
+  width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
@@ -96,6 +98,8 @@ a { text-decoration: none; color: inherit; }
 .site-header {
   position: relative;
   z-index: 2;
+  flex: 0 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -106,13 +110,15 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 0 0 auto;
 }
 
-.logo-icon { width: 40px; height: 40px; }
+.logo-icon { width: 40px; height: 40px; flex: 0 0 40px; }
 
 .logo-text {
   font-weight: 800;
   font-size: 27px;
+  line-height: 1;
   letter-spacing: -0.3px;
   white-space: nowrap;
 }
@@ -123,37 +129,38 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   gap: 16px;
+  flex: 0 0 auto;
 }
 
 .icon-btn {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.18s ease, border-color 0.2s ease, background-color 0.2s ease;
+  flex: 0 0 48px;
+  transition: transform 0.18s ease, color 0.2s ease;
 }
 
-.icon-btn svg { width: 20px; height: 20px; }
+.icon-btn svg { width: 32px; height: 32px; }
 
-.icon-btn:hover { border-color: var(--green); }
+.icon-btn:hover { color: var(--green); }
 
 .icon-btn:active { transform: scale(0.9); }
 
 .icon-btn.is-pressed {
-  animation: instagram-press 0.32s cubic-bezier(0.2, 0.85, 0.35, 1);
+  animation: instagram-press-clean 0.32s cubic-bezier(0.2, 0.85, 0.35, 1);
 }
 
-@keyframes instagram-press {
+@keyframes instagram-press-clean {
   0% { transform: scale(1); }
-  42% { transform: scale(0.84); background: rgba(46, 204, 113, 0.16); }
+  42% { transform: scale(0.84); }
   100% { transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .icon-btn { transition: border-color 0.2s ease, background-color 0.2s ease; }
+  .icon-btn { transition: color 0.2s ease; }
   .icon-btn:active { transform: none; }
   .icon-btn.is-pressed { animation: none; }
 }
@@ -214,7 +221,7 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: -2px;
 }
 
-.headline span {
+.headline > span {
   display: block;
 }
 
@@ -233,6 +240,27 @@ a { text-decoration: none; color: inherit; }
 .coming-soon {
   margin-top: 40px;
   width: fit-content;
+  border: 1.5px solid var(--green);
+  background: var(--green);
+  color: #06190d;
+  user-select: none;
+}
+
+.loading-progress {
+  width: 166px;
+  height: 13px;
+  margin-top: 28px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.loading-progress span {
+  display: block;
+  width: 65%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
 }
 
 /* ---------------------------------------------
@@ -267,8 +295,8 @@ a { text-decoration: none; color: inherit; }
   .logo-icon { width: 24px; height: 24px; }
 
   .header-actions { gap: 8px; }
-  .icon-btn { width: 32px; height: 32px; }
-  .icon-btn svg { width: 14px; height: 14px; }
+  .icon-btn { width: 32px; height: 32px; flex-basis: 32px; }
+  .icon-btn svg { width: 22px; height: 22px; }
   .header-actions .pill-btn { padding: 8px 12px; font-size: 12px; }
 
   .hero {
@@ -293,6 +321,7 @@ a { text-decoration: none; color: inherit; }
   .br-desktop { display: none; }
 
   .coming-soon { margin-top: 24px; padding: 16px 30px; font-size: 13px; }
+  .loading-progress { margin-top: 20px; }
 
   .site-footer {
     flex-direction: row;

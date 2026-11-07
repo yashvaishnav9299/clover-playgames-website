@@ -3,8 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clover Play Games — Good Games Ahead</title>
-  <meta name="description" content="Clover Play Games is crafting new worlds to play and explore. Coming soon." />
+  <title>Clover Play Games — Something Fun Is Loading</title>
+  <meta name="description" content="Clover Play Games is crafting new worlds to play and explore. New games. New adventures. Coming soon." />
+  <meta name="theme-color" content="#07090a" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
+  <!-- Open Graph / Social Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Clover Play Games" />
+  <meta property="og:title" content="Clover Play Games — Something Fun Is Loading" />
+  <meta property="og:description" content="New games. New adventures. Coming soon." />
+  <meta property="og:image" content="images/hero-desktop-1672.jpg" />
+  <meta property="og:image:width" content="1672" />
+  <meta property="og:image:height" content="941" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Clover Play Games — Something Fun Is Loading" />
+  <meta name="twitter:description" content="New games. New adventures. Coming soon." />
+  <meta name="twitter:image" content="images/hero-desktop-1672.jpg" />
 
   <!-- Google Font: Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,20 +41,31 @@
 
     <!-- Header -->
     <header class="site-header">
-      <a href="#" class="logo" aria-label="Clover Play Games home">
+      <a href="./" class="logo" aria-label="Clover Play Games home">
         <svg class="logo-icon" width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 21c-2.6 2.2-6 2.6-8.4.7-2.4-1.9-2.7-5.4-.6-7.9 2.1-2.5 5.6-2.9 8.4-1 -1.7-2.9-1.4-6.4 1-8.5 2.4-2.1 5.9-1.8 7.9.6 2 2.4 1.6 5.9-1 8.1 3.2-.6 6.3.8 7.4 3.6 1.1 2.8-.4 6-3.5 7.2-3.1 1.2-6.5-.1-7.9-3 .5 3.2-1.1 6.2-4 7-2.9.8-5.8-.9-6.7-3.9-.9-3 .5-6 3.4-6.9z" fill="#2ECC71"/>
-          <path d="M20 20.5c.6 1 .9 2.2 1 3.5.1 3.2-1.9 5.9-4.6 6.2" stroke="#1a9950" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/>
+          <defs>
+            <linearGradient id="clover-green" x1="9" y1="5" x2="31" y2="35" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#44F58A"/>
+              <stop offset="1" stop-color="#12B957"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#clover-green)">
+            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z"/>
+            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(72 20 20)"/>
+            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(144 20 20)"/>
+            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(216 20 20)"/>
+            <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(288 20 20)"/>
+          </g>
         </svg>
         <span class="logo-text">CLOVER <span class="accent">PLAY</span> GAMES</span>
       </a>
 
       <nav class="header-actions">
-        <a href="#" class="icon-btn" aria-label="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="1.8"/>
-            <circle cx="12" cy="12" r="4.2" stroke="white" stroke-width="1.8"/>
-            <circle cx="17.6" cy="6.4" r="1.1" fill="white"/>
+        <a href="https://www.instagram.com/cloverplaygames/" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="Instagram">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="26" height="26" rx="7" stroke="currentColor" stroke-width="2.4"/>
+            <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2.4"/>
+            <circle cx="23.6" cy="8.5" r="1.6" fill="currentColor"/>
           </svg>
         </a>
         <a href="mailto:hello@cloverplaygames.com" class="pill-btn outline">
@@ -50,12 +80,15 @@
     <!-- Hero content -->
     <main class="hero">
       <h1 class="headline">
-        <span class="line-white">GOOD</span>
-        <span class="line-white">GAMES</span>
-        <span class="line-accent">AHEAD.</span>
+        <span class="line-white">SOMETHING</span>
+        <span class="line-white">FUN IS</span>
+        <span class="line-accent">LOADING.</span>
       </h1>
-      <p class="subtext">We're crafting new worlds<br class="br-desktop" /> to play and explore.</p>
-      <a href="#" class="pill-btn outline coming-soon">Coming soon</a>
+      <p class="subtext">New games. New adventures.<br class="br-desktop" /> Coming soon.</p>
+      <span class="pill-btn coming-soon">Coming soon</span>
+      <div class="loading-progress" role="img" aria-label="Loading progress">
+        <span></span>
+      </div>
     </main>
 
     <!-- Footer -->
@@ -68,12 +101,12 @@
 
   <script>
     const instagramButton = document.querySelector('.icon-btn');
-
     instagramButton.addEventListener('click', () => {
       instagramButton.classList.remove('is-pressed');
       void instagramButton.offsetWidth;
       instagramButton.classList.add('is-pressed');
     });
+
   </script>
 
 </body>

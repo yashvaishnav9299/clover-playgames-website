@@ -1,0 +1,15 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="clover-green" x1="9" y1="5" x2="31" y2="35" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#44F58A"/>
+      <stop offset="1" stop-color="#12B957"/>
+    </linearGradient>
+  </defs>
+  <g fill="url(#clover-green)">
+    <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z"/>
+    <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(72 20 20)"/>
+    <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(144 20 20)"/>
+    <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(216 20 20)"/>
+    <path d="M20 20C12.4 16.6 10.6 8.2 15.2 4.2c3-2.6 7.6-1.8 9.6 1.6C27.7 10.8 24.7 17.1 20 20Z" transform="rotate(288 20 20)"/>
+  </g>
+</svg>

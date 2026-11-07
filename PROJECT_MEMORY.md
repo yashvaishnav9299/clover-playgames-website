@@ -1,0 +1,95 @@
+# PROJECT MEMORY — Clover Play Games Website
+
+> **Single Source of Truth** for system architecture, environment state, active sprint tracking, and operational runbooks. Maintained per the Autonomous Engineering & Project Operating Protocol.
+
+---
+
+## 1. System Architecture & Tech Stack Decisions
+
+### Overview
+- **Project**: Clover Play Games — Official Company "Coming Soon" Teaser Website
+- **Repository**: `https://github.com/yashvaishnav9299/clover-playgames-website.git`
+- **Hosting & DNS Architecture**: **GitHub Pages** (global CDN, automatic deploy from `main` `/` root, free managed TLS/SSL) + **Hostinger Custom Domain DNS** (`A`, `AAAA`, and `CNAME` records managed via Hostinger API).
+- **Application Stack**: Zero-build, dependency-free static web application (HTML5 + CSS3 + vanilla ES6) with Python 3 standard-library verification and deployment automation (`scripts/manage_site.py`).
+- **Design Rationale**:
+  - **Zero External Runtime Dependencies**: Eliminates bundler complexity, supply-chain vulnerabilities, and build-step latency for a single-page teaser site.
+  - **Art-Directed Responsive Backgrounds**: Uses CSS media queries (`min-width`, `max-width`, and `min-resolution` / `-webkit-min-device-pixel-ratio`) in `css/styles.css` to serve resolution-appropriate 16:9 desktop (`1672px`, `2400px`, `2560px`) and 9:16 mobile (`941px`, `1080px`) hero illustrations.
+  - **Typography**: Google Fonts (`Poppins` weights 400–900) loaded with `preconnect` hints for optimal First Contentful Paint (FCP).
+
+### Directory Structure
+```text
+clover-playgames-website/
+├── index.html             # Semantic HTML5 markup, SEO/Open Graph meta, inline SVG logo, micro-interaction script
+├── css/
+│   └── styles.css         # Custom properties, responsive layout, art-direction breakpoints, animations
+├── images/
+│   ├── favicon.svg             # 5-petal gradient clover SVG browser tab icon
+│   ├── hero-desktop-1672.jpg   # Base desktop (1672x941, 16:9)
+│   ├── hero-desktop-2400.jpg   # Large desktop (2400x1350, 16:9)
+│   ├── hero-desktop-2560.jpg   # 4K/Ultra-wide desktop (2560x1440, 16:9)
+│   ├── hero-mobile-941.jpg     # Standard mobile portrait (941x1672, 9:16)
+│   └── hero-mobile-1080.jpg    # Retina mobile portrait (1080x1920, 9:16)
+├── scripts/
+│   └── manage_site.py     # Zero-dependency Python 3 CLI for verification (`verify`) & DNS/Pages deployment (`deploy`)
+├── .env.example           # Template for local deployment & DNS automation secrets (never committed with real values)
+├── .gitignore             # Git exclusion rules (OS artifacts, logs, .env secrets, private keys)
+├── LICENSE                # Project license
+├── PROJECT_MEMORY.md      # Persistent architectural & project state documentation
+└── README.md              # Developer quick-start and deployment documentation
+```
+
+---
+
+## 2. Environment & Toolchain Prerequisites
+
+### Audited Local Workstation State (Windows)
+- **OS**: Windows (`powershell` shell)
+- **Git**: Configured (`user.name=Yash Vaishnav`, `user.email=yashvaishnav9299@gmail.com`, `credential.helper=manager`, `core.autocrlf=true`)
+- **Python**: `Python 3.13.7` available (`python scripts/manage_site.py verify` and `python scripts/manage_site.py deploy`)
+- **SSH Client**: `OpenSSH_for_Windows_9.5p2` available
+- **Not Installed Locally**: `node` / `npm`, `gh` (GitHub CLI) — all automation scripts rely strictly on Python 3.13 standard library (`urllib.request`, `html.parser`, `json`, `pathlib`).
+
+---
+
+## 3. Active Sprint State & Milestones
+
+### Completed Milestones
+- [x] **Initial Site & Artwork (`c719752`, `d87bef9`)**: Responsive hero background switching and typography.
+- [x] **Phase 1 — Architectural & Product Decisions**:
+  - Selected **GitHub Pages + Hostinger DNS** architecture.
+  - Selected **Full Production Polish** scope.
+  - Configured `.coming-soon` hero element as a static `<span>` status badge (no dead `#` jump).
+  - Configured header Instagram link to `https://www.instagram.com/cloverplaygames/` with `target="_blank" rel="noopener noreferrer"`.
+- [x] **Phase 2 — Git History Reconciliation**:
+  - Merged `origin/main` (`41fa7a1` — structural flex/width stability fixes) with local `main` (`c9292f3`, `fc183cb` + working tree updates: 5-petal clover SVG, `SOMETHING FUN IS LOADING.` copy, and `.loading-progress` bar).
+- [x] **Phase 3 — Production Readiness, SEO & Verification Suite**:
+  - Created `images/favicon.svg` from the 5-petal gradient clover mark and linked in `<head>`.
+  - Added Open Graph (`og:title`, `og:description`, `og:image`, `og:type`, `og:site_name`) and Twitter Card (`summary_large_image`) meta tags in `index.html`.
+  - Cleaned up `css/styles.css`: replaced dead `border-color` hover on borderless `.icon-btn` with `color: var(--green)`, removed unused `@keyframes instagram-press`, removed `!important` overrides on `.coming-soon`, and increased mobile Instagram SVG icon from `14px` to `22px` for visual balance.
+  - Built `scripts/manage_site.py` (`verify` and `deploy` subcommands) and verified all checks pass (`python scripts/manage_site.py verify`).
+
+### Immediate Pending Tasks (Next Phase)
+- [ ] **Phase 4 — Live Hostinger DNS & GitHub Pages Provisioning**:
+  - Populate `.env` with `DOMAIN_NAME`, `HOSTINGER_API_TOKEN`, and `GITHUB_TOKEN`.
+  - Push reconciled `main` branch to `origin/main`.
+  - Run `python scripts/manage_site.py deploy` to write `CNAME`, configure Hostinger `A`/`AAAA`/`CNAME` records, enable GitHub Pages custom domain + HTTPS enforcement, and verify live resolution.
+
+---
+
+## 4. Known Edge Cases, Workarounds & Runbooks
+
+1. **Running Verification Locally**:
+   ```powershell
+   python scripts/manage_site.py verify
+   ```
+   Validates HTML5 tag balance, required SEO/Open Graph meta tags, zero `href="#"` placeholders, CSS brace balance, zero `!important` overrides, responsive image existence, and binary file headers (JPEG `FF D8 FF` magic bytes, SVG `<svg` root).
+2. **Deploying Custom Domain & DNS**:
+   ```powershell
+   # 1. Preview changes safely
+   python scripts/manage_site.py deploy --dry-run
+
+   # 2. Apply live (requires .env with DOMAIN_NAME, HOSTINGER_API_TOKEN, GITHUB_TOKEN)
+   python scripts/manage_site.py deploy
+   ```
+3. **Preserving Email (`MX` / `TXT`) Records on Hostinger**:
+   - `scripts/manage_site.py deploy` sends `"overwrite": false` to `PUT https://developers.hostinger.com/api/dns/v1/zones/{domain}` so existing `MX`, `SPF`, `DKIM`, and `DMARC` records for `hello@cloverplaygames.com` are preserved while adding the GitHub Pages `A`, `AAAA`, and `www` `CNAME` records.
