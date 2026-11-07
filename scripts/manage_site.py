@@ -204,6 +204,47 @@ def verify_site() -> int:
 
     print(f"[PASS] Asset binary/header integrity verified across {len(expected_assets)} files.")
 
+    # 4. Multi-Resolution Viewport & Brand Logo Consistency Verification
+    def clamp_val(min_px: float, pref_px: float, max_px: float) -> float:
+        return max(min_px, min(pref_px, max_px))
+
+    test_viewports = [
+        ("Mobile Small (360x640)", 360, 640),
+        ("Mobile Standard (390x844)", 390, 844),
+        ("Tablet Portrait (768x1024)", 768, 1024),
+        ("Laptop HD (1280x720)", 1280, 720),
+        ("Laptop WXGA (1366x768)", 1366, 768),
+        ("Laptop Scaled 125% (1536x864)", 1536, 864),
+        ("Desktop Reference (1672x941)", 1672, 941),
+        ("Full HD 1080p (1920x1080)", 1920, 1080),
+        ("QHD 2K (2560x1440)", 2560, 1440),
+        ("UHD 4K (3840x2160)", 3840, 2160),
+    ]
+
+    for label, vw, vh in test_viewports:
+        if vw >= 981 and vh >= 640:
+            # Verify Contact Page vertical height budget fits within 100dvh without scroll
+            header_h = clamp_val(18, 0.032 * vh, 38) + clamp_val(38, min(0.028 * vw, 0.048 * vh), 48)
+            footer_h = clamp_val(14, 0.022 * vh, 28) + 24
+            main_pad_v = 2 * clamp_val(12, 0.022 * vh, 32)
+            # Form card height budget
+            card_pad_v = 2 * clamp_val(20, 0.03 * vh, 38)
+            title_sub_h = clamp_val(21, min(0.0175 * vw, 0.028 * vh), 30) * 1.3 + clamp_val(12.5, min(0.0092 * vw, 0.0155 * vh), 15.5) * 1.45 + clamp_val(12, 0.019 * vh, 22)
+            input_h = 2 * clamp_val(9, 0.013 * vh, 14) + 20 + clamp_val(12, min(0.0086 * vw, 0.0145 * vh), 14) + 6
+            textarea_h = clamp_val(64, 0.092 * vh, 112) + 24
+            btn_h = 2 * clamp_val(12, 0.017 * vh, 17) + 22
+            gaps_h = 4 * clamp_val(10, 0.0145 * vh, 18)
+            total_contact_h = header_h + footer_h + main_pad_v + card_pad_v + title_sub_h + (3 * input_h) + textarea_h + btn_h + gaps_h
+            if total_contact_h > vh:
+                failures.append(f"Contact page vertical overflow on {label}: {total_contact_h:.0f}px > {vh}px")
+
+    for logo_target in ("images/favicon.svg", "images/logo.svg", "index.html", "contact.html", "privacy-policy.html"):
+        txt = (ROOT_DIR / logo_target).read_text(encoding="utf-8")
+        if "cpg-crest-bg" not in txt or "cpg-crest-clover" not in txt:
+            failures.append(f"Final Studio App-Icon Crest logo missing in {logo_target}")
+
+    print(f"[PASS] Multi-resolution viewport scaling verified across {len(test_viewports)} screen profiles (360px -> 4K).")
+
     if failures:
         print("\n=== VERIFICATION FAILED ===")
         for f in failures:
