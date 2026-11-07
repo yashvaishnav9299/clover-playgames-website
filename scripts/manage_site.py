@@ -101,50 +101,63 @@ def verify_site() -> int:
     print("=== Clover Play Games: Running Verification Suite ===")
     failures: list[str] = []
 
-    index_path = ROOT_DIR / "index.html"
+    html_pages = ["index.html", "contact.html", "privacy-policy.html"]
     css_path = ROOT_DIR / "css" / "styles.css"
 
-    if not index_path.exists():
-        print("[FAIL] index.html is missing.")
-        return 1
+    for page_name in html_pages:
+        if not (ROOT_DIR / page_name).exists():
+            print(f"[FAIL] {page_name} is missing.")
+            return 1
     if not css_path.exists():
         print("[FAIL] css/styles.css is missing.")
         return 1
 
-    # 1. Validate HTML structure, links, and metadata
-    html_content = index_path.read_text(encoding="utf-8")
-    validator = HTMLValidator()
-    validator.feed(html_content)
-
-    if validator.errors:
-        failures.extend(validator.errors)
-    if validator.stack:
-        failures.append(f"Unclosed HTML tags remaining: {validator.stack}")
-    if not validator.has_title:
-        failures.append("Missing <title> element in index.html")
-    if not validator.has_favicon:
-        failures.append("Missing <link rel='icon'> favicon in index.html")
-
+    # 1. Validate HTML structure, links, email consistency, and metadata across all pages
     required_meta = ["description", "og:title", "og:description", "og:image", "twitter:card"]
-    for meta_key in required_meta:
-        if meta_key not in validator.meta_tags or not validator.meta_tags[meta_key]:
-            failures.append(f"Missing or empty meta tag: {meta_key}")
+    for page_name in html_pages:
+        page_path = ROOT_DIR / page_name
+        html_content = page_path.read_text(encoding="utf-8")
+        validator = HTMLValidator()
+        validator.feed(html_content)
 
-    for href in validator.links:
-        if href == "#":
-            failures.append("Found dead placeholder link href='#' in index.html")
-        elif not href.startswith(("http://", "https://", "mailto:", "./", "/")):
-            target = (ROOT_DIR / href).resolve()
-            if not target.exists():
-                failures.append(f"Broken relative asset link in index.html: {href}")
+        if "hello@cloverplaygames.com" in html_content:
+            failures.append(f"Found deprecated email 'hello@cloverplaygames.com' in {page_name}")
+        if "info@cloverplaygames.com" not in html_content:
+            failures.append(f"Missing official email 'info@cloverplaygames.com' in {page_name}")
 
-    for img_meta in ("og:image", "twitter:image"):
-        img_ref = validator.meta_tags.get(img_meta, "")
-        if img_ref and not img_ref.startswith(("http://", "https://")):
-            if not (ROOT_DIR / img_ref).exists():
-                failures.append(f"Missing social preview image referenced by {img_meta}: {img_ref}")
+        if validator.errors:
+            failures.extend(f"[{page_name}] {err}" for err in validator.errors)
+        if validator.stack:
+            failures.append(f"[{page_name}] Unclosed HTML tags remaining: {validator.stack}")
+        if not validator.has_title:
+            failures.append(f"Missing <title> element in {page_name}")
+        if not validator.has_favicon:
+            failures.append(f"Missing <link rel='icon'> favicon in {page_name}")
 
-    print("[PASS] HTML5 structure, SEO/Open Graph meta tags, and link targets verified.")
+        for meta_key in required_meta:
+            if meta_key not in validator.meta_tags or not validator.meta_tags[meta_key]:
+                failures.append(f"[{page_name}] Missing or empty meta tag: {meta_key}")
+
+        for href in validator.links:
+            if href == "#":
+                failures.append(f"Found dead placeholder link href='#' in {page_name}")
+            elif href.startswith("#"):
+                anchor_id = href[1:]
+                if f'id="{anchor_id}"' not in html_content:
+                    failures.append(f"[{page_name}] Broken internal anchor link: {href}")
+            elif not href.startswith(("http://", "https://", "mailto:", "./", "/")):
+                clean_rel = href.split("?", 1)[0].split("#", 1)[0]
+                target = (ROOT_DIR / clean_rel).resolve()
+                if not target.exists():
+                    failures.append(f"[{page_name}] Broken relative asset link: {href}")
+
+        for img_meta in ("og:image", "twitter:image"):
+            img_ref = validator.meta_tags.get(img_meta, "")
+            if img_ref and not img_ref.startswith(("http://", "https://")):
+                if not (ROOT_DIR / img_ref).exists():
+                    failures.append(f"[{page_name}] Missing social preview image referenced by {img_meta}: {img_ref}")
+
+    print(f"[PASS] HTML5 structure, SEO/Open Graph meta tags, and link targets verified across {len(html_pages)} pages.")
 
     # 2. Validate CSS syntax & asset URLs
     css_content = css_path.read_text(encoding="utf-8")
@@ -167,8 +180,11 @@ def verify_site() -> int:
     # 3. Static Asset Integrity (JPEG headers, SVG XML structure, non-empty sizes)
     expected_assets = [
         ("index.html", b"<!DOCTYPE html>"),
+        ("contact.html", b"<!DOCTYPE html>"),
+        ("privacy-policy.html", b"<!DOCTYPE html>"),
         ("css/styles.css", b"/*"),
         ("images/favicon.svg", b"<svg"),
+        ("images/logo.svg", b"<svg"),
         ("images/hero-desktop-1672.jpg", b"\xff\xd8\xff"),
         ("images/hero-desktop-2400.jpg", b"\xff\xd8\xff"),
         ("images/hero-desktop-2560.jpg", b"\xff\xd8\xff"),

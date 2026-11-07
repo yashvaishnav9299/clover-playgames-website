@@ -19,11 +19,14 @@
 ### Directory Structure
 ```text
 clover-playgames-website/
-├── index.html             # Semantic HTML5 markup, SEO/Open Graph meta, inline SVG logo, micro-interaction script
+├── index.html             # Home / Teaser page, SEO/Open Graph meta, 4-leaf clover + Play SVG logo
+├── contact.html           # Dedicated Get in Touch page with interactive contact form & info@cloverplaygames.com actions
+├── privacy-policy.html    # Google Play & Apple App Store compliant Privacy Policy & Data Deletion instructions
 ├── css/
-│   └── styles.css         # Custom properties, responsive layout, art-direction breakpoints, animations
+│   └── styles.css         # Custom properties, responsive layout, subpage glassmorphism, animations
 ├── images/
-│   ├── favicon.svg             # 5-petal gradient clover SVG browser tab icon
+│   ├── favicon.svg             # 4-leaf heart-shaped clover + Play triangle SVG browser tab icon
+│   ├── logo.svg                # Standalone vector brand mark SVG
 │   ├── hero-desktop-1672.jpg   # Base desktop (1672x941, 16:9)
 │   ├── hero-desktop-2400.jpg   # Large desktop (2400x1350, 16:9)
 │   ├── hero-desktop-2560.jpg   # 4K/Ultra-wide desktop (2560x1440, 16:9)
@@ -75,6 +78,12 @@ clover-playgames-website/
   - Enabled GitHub Pages (`main` branch, `/` root) via GitHub REST API (`PUT /repos/yashvaishnav9299/clover-playgames-website/pages`).
   - Provisioned Let's Encrypt TLS certificate (`state: approved`, expires `2027-02-05`) covering both `cloverplaygames.com` and `www.cloverplaygames.com`.
   - Enabled `https_enforced: true` and verified `status: built` at `https://cloverplaygames.com/`.
+- [x] **Phase 5 — Brand Logo Redesign, Get in Touch Page, Privacy Policy & Official Email Update**:
+  - Redesigned the Clover Play Games logo mark (`images/favicon.svg`, `images/logo.svg`, and inline header SVGs) from a 5-petal flower to a proper 4-leaf heart-shaped lucky clover with a curved stem and central Play triangle gaming emblem.
+  - Updated official studio contact email across the entire site to `info@cloverplaygames.com`.
+  - Built dedicated `contact.html` ("Get in Touch" page) featuring an interactive contact form, quick-topic selectors, 1-click Copy Email button, Mail App trigger, and Gmail Web fallback.
+  - Built dedicated `privacy-policy.html` ("Privacy Policy" page) compliant with Google Play Store & Apple App Store requirements (covering mobile games, AdMob/Firebase/Unity SDKs, IAPs, COPPA children's privacy, GDPR/CCPA rights, and step-by-step Data Deletion request instructions).
+  - Expanded `scripts/manage_site.py verify` to validate all 3 HTML pages, internal anchors, query-string links, email consistency (`info@cloverplaygames.com`), and SVG/JPEG assets.
 - [x] **Phase 4C — Hostinger Agentic Mail API Integration**:
   - Connected `scripts/manage_site.py mail` to `https://api.mail.hostinger.com/api/v1` using `HOSTINGER_MAIL_API_TOKEN` in `.env`.
   - Verified active mailbox resource `ACdd7d5abbaa2024c8efdf34986ab4` (`info@cloverplaygames.com`, order `OR47a2a52ea5c0be690b521356cbca`) and folder access (`INBOX`, `Drafts`, `Junk`, `Sent`, `Trash`).
