@@ -34,7 +34,7 @@
 </head>
 <body>
 
-  <div class="page subpage">
+  <div class="page subpage contact-page">
 
     <!-- Background scene with readable dark scrim -->
     <div class="hero-bg" aria-hidden="true"></div>
@@ -45,42 +45,35 @@
       <a href="./" class="logo" aria-label="Clover Play Games home">
         <svg class="logo-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="clover-leaf-main" x1="6" y1="4" x2="34" y2="36" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#5BFF9C"/>
-              <stop offset="50%" stop-color="#2ECC71"/>
-              <stop offset="100%" stop-color="#0E9F49"/>
+            <linearGradient id="cpg-lit" x1="6" y1="4" x2="34" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#6BFFAE"/>
+              <stop offset="55%" stop-color="#2ECC71"/>
+              <stop offset="100%" stop-color="#109848"/>
             </linearGradient>
-            <linearGradient id="clover-leaf-alt" x1="34" y1="4" x2="6" y2="36" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#44F58A"/>
-              <stop offset="55%" stop-color="#24B862"/>
-              <stop offset="100%" stop-color="#0A7E38"/>
-            </linearGradient>
-            <linearGradient id="clover-play-grad" x1="16" y1="15" x2="25" y2="25" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#FFFFFF"/>
-              <stop offset="100%" stop-color="#B8FFD3"/>
+            <linearGradient id="cpg-shade" x1="8" y1="6" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#3CE882"/>
+              <stop offset="100%" stop-color="#0B7A38"/>
             </linearGradient>
           </defs>
-          <path d="M20 22C20 27.8 20.6 32.5 23.2 36.8" stroke="url(#clover-leaf-main)" stroke-width="2.6" stroke-linecap="round"/>
-          <g>
-            <g transform="rotate(45 20 20)">
-              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-main)"/>
-              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round"/>
-            </g>
-            <g transform="rotate(135 20 20)">
-              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-alt)"/>
-              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.35" stroke-width="1.1" stroke-linecap="round"/>
-            </g>
-            <g transform="rotate(225 20 20)">
-              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-main)"/>
-              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.35" stroke-width="1.1" stroke-linecap="round"/>
-            </g>
-            <g transform="rotate(315 20 20)">
-              <path d="M20 18.8C14.2 15.6 10.6 10.4 12.3 5.8C13.7 2.2 17.8 2.1 20 5.2C22.2 2.1 26.3 2.2 27.7 5.8C29.4 10.4 25.8 15.6 20 18.8Z" fill="url(#clover-leaf-alt)"/>
-              <path d="M20 16.5V7.2" stroke="#A6FFC7" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round"/>
-            </g>
+          <!-- 4-Leaf 3D Faceted Lucky Clover with Negative-Space Play Center -->
+          <g transform="rotate(45 20 20)">
+            <path d="M20 17.6C13.5 14.2 10.2 8.8 12.2 4.6C13.6 1.6 17.8 1.8 20 4.9V17.6Z" fill="url(#cpg-lit)"/>
+            <path d="M20 17.6C26.5 14.2 29.8 8.8 27.8 4.6C26.4 1.6 22.2 1.8 20 4.9V17.6Z" fill="url(#cpg-shade)"/>
           </g>
-          <circle cx="20" cy="20" r="6.4" fill="#06170D" stroke="#44F58A" stroke-width="1.4"/>
-          <path d="M18.3 16.9C18.3 16.4 18.85 16.1 19.28 16.36L23.15 18.66C23.56 18.9 23.56 19.5 23.15 19.74L19.28 22.04C18.85 22.3 18.3 22 18.3 21.5V16.9Z" transform="translate(0 0.8)" fill="url(#clover-play-grad)"/>
+          <g transform="rotate(135 20 20)">
+            <path d="M20 17.6C13.5 14.2 10.2 8.8 12.2 4.6C13.6 1.6 17.8 1.8 20 4.9V17.6Z" fill="url(#cpg-lit)"/>
+            <path d="M20 17.6C26.5 14.2 29.8 8.8 27.8 4.6C26.4 1.6 22.2 1.8 20 4.9V17.6Z" fill="url(#cpg-shade)"/>
+          </g>
+          <g transform="rotate(225 20 20)">
+            <path d="M20 17.6C13.5 14.2 10.2 8.8 12.2 4.6C13.6 1.6 17.8 1.8 20 4.9V17.6Z" fill="url(#cpg-lit)"/>
+            <path d="M20 17.6C26.5 14.2 29.8 8.8 27.8 4.6C26.4 1.6 22.2 1.8 20 4.9V17.6Z" fill="url(#cpg-shade)"/>
+          </g>
+          <g transform="rotate(315 20 20)">
+            <path d="M20 17.6C13.5 14.2 10.2 8.8 12.2 4.6C13.6 1.6 17.8 1.8 20 4.9V17.6Z" fill="url(#cpg-lit)"/>
+            <path d="M20 17.6C26.5 14.2 29.8 8.8 27.8 4.6C26.4 1.6 22.2 1.8 20 4.9V17.6Z" fill="url(#cpg-shade)"/>
+          </g>
+          <circle cx="20" cy="20" r="5.6" fill="#06140C"/>
+          <path d="M18.4 17.1C18.4 16.65 18.9 16.38 19.28 16.62L22.95 18.88C23.32 19.1 23.32 19.64 22.95 19.86L19.28 22.12C18.9 22.36 18.4 22.09 18.4 21.64V17.1Z" transform="translate(0 0.6)" fill="#FFFFFF"/>
         </svg>
         <span class="logo-text">CLOVER <span class="accent">PLAY</span> GAMES</span>
       </a>
@@ -117,28 +110,25 @@
           <div class="glass-card email-spotlight-card">
             <div class="email-card-header">
               <div class="email-icon-badge" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="2" y="4" width="20" height="16" rx="3" stroke="currentColor" stroke-width="2"/>
                   <path d="M22 7L13.03 12.7C12.41 13.09 11.59 13.09 10.97 12.7L2 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
               </div>
               <div>
                 <span class="card-eyebrow">OFFICIAL STUDIO EMAIL</span>
-                <a href="mailto:info@cloverplaygames.com" class="email-address-link" id="official-email">info@cloverplaygames.com</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@cloverplaygames.com" target="_blank" rel="noopener noreferrer" class="email-address-link" id="official-email">info@cloverplaygames.com</a>
               </div>
             </div>
 
             <div class="email-quick-actions">
               <button type="button" class="action-chip primary-chip" id="copy-email-btn" data-email="info@cloverplaygames.com">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
                   <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
                 </svg>
                 <span id="copy-email-label">Copy Email</span>
               </button>
-              <a href="mailto:info@cloverplaygames.com" class="action-chip">
-                Open Mail App
-              </a>
               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@cloverplaygames.com" target="_blank" rel="noopener noreferrer" class="action-chip">
                 Gmail Web ↗
               </a>
@@ -207,32 +197,18 @@
 
               <div class="form-group">
                 <label for="inquiry-message">Message</label>
-                <textarea id="inquiry-message" name="message" rows="4" required placeholder="Write your message here..."></textarea>
+                <textarea id="inquiry-message" name="message" rows="3" required placeholder="Write your message here..."></textarea>
               </div>
 
-              <button type="submit" class="pill-btn solid-green submit-btn">
-                Send Message to Studio
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
+              <div class="form-submit-row">
+                <button type="submit" class="pill-btn solid-green submit-btn" id="submit-form-btn">
+                  <span id="submit-btn-label">Send Message to Studio</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
             </form>
-
-            <!-- Ready-to-Send Dispatch Panel (shown on submit) -->
-            <div id="form-dispatch-panel" class="dispatch-panel" hidden>
-              <div class="dispatch-header">
-                <span class="dispatch-check">✓</span>
-                <div>
-                  <strong>Message Prepared for info@cloverplaygames.com</strong>
-                  <p>Your default email client has been triggered. If it didn't open automatically, choose an option below:</p>
-                </div>
-              </div>
-              <div class="dispatch-actions">
-                <a id="dispatch-mailto" href="mailto:info@cloverplaygames.com" class="action-chip primary-chip">Open Mail App</a>
-                <a id="dispatch-gmail" href="https://mail.google.com/mail/" target="_blank" rel="noopener noreferrer" class="action-chip">Send via Gmail Web ↗</a>
-                <button type="button" id="dispatch-copy-msg" class="action-chip">Copy Full Message</button>
-              </div>
-            </div>
 
           </div>
         </section>
@@ -248,7 +224,7 @@
         <span class="footer-sep" aria-hidden="true">•</span>
         <a href="privacy-policy.html">Privacy Policy</a>
         <span class="footer-sep" aria-hidden="true">•</span>
-        <a href="mailto:info@cloverplaygames.com" class="footer-email">info@cloverplaygames.com</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@cloverplaygames.com" target="_blank" rel="noopener noreferrer" class="footer-email">info@cloverplaygames.com</a>
       </nav>
     </footer>
 
@@ -280,7 +256,7 @@
             copyEmailBtn.classList.remove('is-copied');
           }, 2400);
         } catch (err) {
-          window.location.href = 'mailto:' + email;
+          // Clipboard fallback ignored
         }
       });
     }
@@ -313,13 +289,9 @@
       selectTopic('Privacy / Data Deletion Request');
     }
 
-    // Contact Form submission handler
+    // Contact Form submission handler -> opens Gmail Web Compose directly
     const contactForm = document.getElementById('contact-form');
-    const dispatchPanel = document.getElementById('form-dispatch-panel');
-    const dispatchMailto = document.getElementById('dispatch-mailto');
-    const dispatchGmail = document.getElementById('dispatch-gmail');
-    const dispatchCopyBtn = document.getElementById('dispatch-copy-msg');
-    let latestFormattedText = '';
+    const submitBtnLabel = document.getElementById('submit-btn-label');
 
     if (contactForm) {
       contactForm.addEventListener('submit', (e) => {
@@ -341,35 +313,17 @@
           message
         ].join('\n');
 
-        latestFormattedText = 'To: ' + studioEmail + '\nSubject: ' + fullSubject + '\n\n' + fullBody;
-
-        const mailtoHref = 'mailto:' + studioEmail +
-          '?subject=' + encodeURIComponent(fullSubject) +
-          '&body=' + encodeURIComponent(fullBody);
-
         const gmailHref = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(studioEmail) +
           '&su=' + encodeURIComponent(fullSubject) +
           '&body=' + encodeURIComponent(fullBody);
 
-        if (dispatchMailto) dispatchMailto.setAttribute('href', mailtoHref);
-        if (dispatchGmail) dispatchGmail.setAttribute('href', gmailHref);
-        if (dispatchPanel) dispatchPanel.hidden = false;
+        window.open(gmailHref, '_blank', 'noopener,noreferrer');
 
-        window.location.href = mailtoHref;
-      });
-    }
-
-    if (dispatchCopyBtn) {
-      dispatchCopyBtn.addEventListener('click', async () => {
-        if (!latestFormattedText) return;
-        try {
-          await navigator.clipboard.writeText(latestFormattedText);
-          dispatchCopyBtn.textContent = 'Copied Message! ✓';
+        if (submitBtnLabel) {
+          submitBtnLabel.textContent = 'Opened in Gmail Web ✓';
           setTimeout(() => {
-            dispatchCopyBtn.textContent = 'Copy Full Message';
-          }, 2400);
-        } catch (err) {
-          // Fallback ignored
+            submitBtnLabel.textContent = 'Send Message to Studio';
+          }, 3000);
         }
       });
     }
