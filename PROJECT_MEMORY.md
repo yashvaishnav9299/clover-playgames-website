@@ -71,10 +71,13 @@ clover-playgames-website/
   - Connected to Hostinger API (`developers.hostinger.com`) for `cloverplaygames.com` (`id: 34360046`, active until `2027-09-10`).
   - Replaced legacy Netlify DNS records (`75.2.60.5` and `magic-sort-webdemo.netlify.app.`) with GitHub Pages `A` records (`185.199.108.153`..`111.153`), `AAAA` IPv6 records (`2606:50c0:8000::153`..`8003::153`), and `www` `CNAME` (`yashvaishnav9299.github.io`), while preserving all 8 Hostinger email records (`MX`, `SPF`, `DMARC`, `DKIM`, `autoconfig`, `autodiscover`).
   - Added `CNAME` (`cloverplaygames.com`) to repository root.
+- [x] **Phase 4B — GitHub Pages Activation & HTTPS Enforcement**:
+  - Enabled GitHub Pages (`main` branch, `/` root) via GitHub REST API (`PUT /repos/yashvaishnav9299/clover-playgames-website/pages`).
+  - Provisioned Let's Encrypt TLS certificate (`state: approved`, expires `2027-02-05`) covering both `cloverplaygames.com` and `www.cloverplaygames.com`.
+  - Enabled `https_enforced: true` and verified `status: built` at `https://cloverplaygames.com/`.
 
-### Immediate Pending Tasks (Final Step)
-- [ ] **Phase 4B — GitHub Pages Activation & HTTPS Enforcement**:
-  - Enable GitHub Pages on `yashvaishnav9299/clover-playgames-website` (`main` branch, `/` root) either via `GITHUB_TOKEN` in `.env` or via GitHub repo **Settings → Pages**.
+### Immediate Pending Tasks
+- None — all current sprint milestones are complete and live in production at `https://cloverplaygames.com/`.
 
 ---
 

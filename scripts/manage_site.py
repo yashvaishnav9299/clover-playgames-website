@@ -217,11 +217,18 @@ def api_request(url: str, method: str, headers: dict[str, str], payload: dict | 
         raise RuntimeError(f"HTTP {exc.code} on {method} {url}: {err_body}") from exc
 
 
+def get_github_token(env: dict[str, str]) -> str:
+    token = env.get("GITHUB_TOKEN", "").strip()
+    if token and token != "your_github_pat_here":
+        return token
+    return ""
+
+
 def deploy_site(dry_run: bool) -> int:
     env = {**load_env(ROOT_DIR / ".env"), **os.environ}
     domain = env.get("DOMAIN_NAME", "").strip()
     hostinger_token = env.get("HOSTINGER_API_TOKEN", "").strip()
-    github_token = env.get("GITHUB_TOKEN", "").strip()
+    github_token = get_github_token(env)
     github_repo = env.get("GITHUB_REPO", "yashvaishnav9299/clover-playgames-website").strip()
 
     if not domain or domain == "your_domain_here":
@@ -306,18 +313,76 @@ def deploy_site(dry_run: bool) -> int:
         "Content-Type": "application/json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    gh_payload = {
-        "cname": domain,
-        "https_enforced": True,
-        "source": {"branch": "main", "path": "/"},
-    }
 
     if not dry_run and not github_token:
-        print("[WARN] GITHUB_TOKEN not set in .env; skipping GitHub Pages REST API call.")
-    else:
-        api_request(gh_pages_url, "PUT", gh_headers, gh_payload, dry_run=dry_run)
-        if not dry_run:
-            print(f"[OK] Configured GitHub Pages custom domain ({domain}) for {github_repo}")
+        print("[WARN] No GitHub token available; skipping GitHub Pages REST API call.")
+        return 0
+
+    if dry_run:
+        api_request(
+            gh_pages_url,
+            "PUT",
+            gh_headers,
+            {"cname": domain, "https_enforced": True, "source": {"branch": "main", "path": "/"}},
+            dry_run=True,
+        )
+        return 0
+
+    # Check if GitHub Pages is already enabled
+    pages_exists = False
+    try:
+        current_pages = api_request(gh_pages_url, "GET", gh_headers, None, dry_run=False)
+        pages_exists = True
+        print(f"[OK] GitHub Pages already enabled: {current_pages.get('html_url')}")
+    except RuntimeError as exc:
+        if "HTTP 404" in str(exc):
+            pages_exists = False
+        else:
+            raise
+
+    if not pages_exists:
+        created = api_request(
+            gh_pages_url,
+            "POST",
+            gh_headers,
+            {"source": {"branch": "main", "path": "/"}},
+            dry_run=False,
+        )
+        print(f"[OK] Enabled GitHub Pages for {github_repo}: {created.get('html_url')}")
+
+    # Bind custom domain
+    try:
+        api_request(
+            gh_pages_url,
+            "PUT",
+            gh_headers,
+            {"cname": domain, "https_enforced": True, "source": {"branch": "main", "path": "/"}},
+            dry_run=False,
+        )
+        print(f"[OK] Configured GitHub Pages custom domain ({domain}) with HTTPS enforced.")
+    except RuntimeError as exc:
+        # If certificate is still being provisioned, set cname first without https_enforced
+        if "HTTP 422" in str(exc) or "HTTP 400" in str(exc) or "certificate" in str(exc).lower():
+            api_request(
+                gh_pages_url,
+                "PUT",
+                gh_headers,
+                {"cname": domain, "source": {"branch": "main", "path": "/"}},
+                dry_run=False,
+            )
+            print(f"[OK] Configured GitHub Pages custom domain ({domain}); TLS certificate is provisioning.")
+        else:
+            raise
+
+    # Fetch and print final GitHub Pages status
+    final_pages = api_request(gh_pages_url, "GET", gh_headers, None, dry_run=False)
+    print(json.dumps({
+        "html_url": final_pages.get("html_url"),
+        "cname": final_pages.get("cname"),
+        "status": final_pages.get("status"),
+        "https_enforced": final_pages.get("https_enforced"),
+        "https_certificate": final_pages.get("https_certificate"),
+    }, indent=2))
 
     return 0
 
@@ -359,7 +424,44 @@ def check_hostinger_status() -> int:
             None,
             dry_run=False,
         )
-        print(json.dumps(zone, indent=2))
+        print(f"[OK] Active DNS records in zone ({len(zone)} record groups):")
+        for entry in zone:
+            vals = ", ".join(r.get("content", "") for r in entry.get("records", []))
+            print(f"  - {entry.get('type'):5s} {entry.get('name'):28s} -> {vals}")
+
+    github_token = get_github_token(env)
+    github_repo = env.get("GITHUB_REPO", "yashvaishnav9299/clover-playgames-website").strip()
+    if github_token:
+        print(f"\n=== Querying GitHub Pages Status for {github_repo} ===")
+        gh_pages_url = f"https://api.github.com/repos/{github_repo}/pages"
+        gh_headers = {
+            "Authorization": f"Bearer {github_token}",
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        }
+        pages_info = api_request(gh_pages_url, "GET", gh_headers, None, dry_run=False)
+        cert = pages_info.get("https_certificate") or {}
+        if cert.get("state") == "approved" and not pages_info.get("https_enforced"):
+            try:
+                api_request(
+                    gh_pages_url,
+                    "PUT",
+                    gh_headers,
+                    {"cname": domain, "https_enforced": True, "source": {"branch": "main", "path": "/"}},
+                    dry_run=False,
+                )
+                pages_info = api_request(gh_pages_url, "GET", gh_headers, None, dry_run=False)
+                print("[OK] Automatically enabled HTTPS enforcement!")
+            except Exception as exc:
+                print(f"[INFO] HTTPS enforcement pending: {exc}")
+        print(json.dumps({
+            "html_url": pages_info.get("html_url"),
+            "cname": pages_info.get("cname"),
+            "status": pages_info.get("status"),
+            "https_enforced": pages_info.get("https_enforced"),
+            "https_certificate": pages_info.get("https_certificate"),
+        }, indent=2))
 
     return 0
 
