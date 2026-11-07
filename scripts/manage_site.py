@@ -240,8 +240,8 @@ def verify_site() -> int:
 
     for logo_target in ("images/favicon.svg", "images/logo.svg", "index.html", "contact.html", "privacy-policy.html"):
         txt = (ROOT_DIR / logo_target).read_text(encoding="utf-8")
-        if "cpg-crest-bg" not in txt or "cpg-crest-clover" not in txt:
-            failures.append(f"Final Studio App-Icon Crest logo missing in {logo_target}")
+        if "cpg-lit" not in txt or "cpg-shade" not in txt:
+            failures.append(f"Final Option 1 (3D Play Core) logo missing in {logo_target}")
 
     print(f"[PASS] Multi-resolution viewport scaling verified across {len(test_viewports)} screen profiles (360px -> 4K).")
 
